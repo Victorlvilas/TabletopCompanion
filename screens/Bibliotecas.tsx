@@ -32,7 +32,10 @@ export default function Bibliotecas() {
             <TouchableOpacity style={styles.dotsBtn}>
               <Text style={styles.dots}>···</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.arrowBtn} onPress={() => router.push('/listajuegos')}>
+            <TouchableOpacity
+              style={styles.arrowBtn}
+              onPress={() => router.push("/listajuegos")}
+            >
               <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
@@ -48,7 +51,10 @@ export default function Bibliotecas() {
             <TouchableOpacity style={styles.dotsBtn}>
               <Text style={styles.dots}>···</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.arrowBtn, styles.arrowGreen]} onPress={() => router.push('/listajuegos')}>
+            <TouchableOpacity
+              style={[styles.arrowBtn, styles.arrowGreen]}
+              onPress={() => router.push("/listajuegos")}
+            >
               <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
