@@ -8,9 +8,15 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { useGame } from "./GameContext";
 
 export default function SushiGoConfig() {
   const router = useRouter();
+  const {
+    setJugadores: guardarJugadores,
+    setPuntuaciones,
+    setRondaActual,
+  } = useGame();
   const [jugadores, setJugadores] = useState(["Lena", "Víctor"]);
 
   const añadirJugador = () => {
@@ -78,7 +84,12 @@ export default function SushiGoConfig() {
 
         <TouchableOpacity
           style={styles.primaryBtn}
-          onPress={() => router.push("/sushigopuntuacion")}
+          onPress={() => {
+            guardarJugadores(jugadores);
+            setPuntuaciones(jugadores.map(() => [null, null, null]));
+            setRondaActual(1);
+            router.push("/sushigopuntuacion");
+          }}
         >
           <Text style={styles.primaryBtnText}>Iniciar partida</Text>
         </TouchableOpacity>

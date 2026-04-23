@@ -31,7 +31,7 @@ export default function ListaJuegos() {
       <View style={styles.cardsList}>
         <TouchableOpacity
           style={styles.card}
-          onPress={() => router.push("/sushigo")}
+          onPress={() => router.push("/sushigoconfig")}
         >
           <View style={[styles.cardImg, styles.sushi]}>
             <Text style={styles.emoji}>🍣</Text>
