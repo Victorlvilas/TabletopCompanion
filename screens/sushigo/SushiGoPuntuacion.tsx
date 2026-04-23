@@ -123,7 +123,7 @@ export default function SushiGoPuntuacion() {
     });
 
     setPuntuaciones(conPudin);
-    router.push("/sushigo/final");
+    router.replace("/sushigo/final");
   };
 
   return (

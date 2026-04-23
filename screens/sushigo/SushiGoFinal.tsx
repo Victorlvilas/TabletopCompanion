@@ -41,7 +41,7 @@ export default function SushiGoFinal() {
 
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => router.push("/listajuegos")}
+        onPress={() => router.navigate('/' as any)}
       >
         <Text style={styles.btnText}>Volver al inicio</Text>
       </TouchableOpacity>
