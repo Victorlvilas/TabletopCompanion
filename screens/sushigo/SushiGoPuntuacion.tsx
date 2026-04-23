@@ -1,12 +1,12 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
 import { useRouter } from "expo-router";
-import { useGame } from "./GameContext";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useGame } from "../GameContext";
 
 const RONDAS_TOTALES = 3;
 
@@ -18,6 +18,8 @@ export default function SushiGoPuntuacion() {
     setPuntuaciones,
     rondaActual,
     setRondaActual,
+    makiPorRonda,
+    pudinTotal,
   } = useGame();
 
   if (!jugadores.length || !puntuaciones.length) {
@@ -33,9 +35,95 @@ export default function SushiGoPuntuacion() {
 
   const siguienteRonda = () => {
     if (!todasRellenas) return;
-    if (rondaActual < RONDAS_TOTALES) {
+
+    const r = rondaActual - 1;
+    const makisRonda = jugadores.map((_, pi) => makiPorRonda[pi]?.[r] ?? 0);
+    const maxMaki = Math.max(...makisRonda);
+    const segundoMaki = [...makisRonda].sort((a, b) => b - a)[1];
+
+    const primerosIdx = makisRonda
+      .map((m, i) => (m === maxMaki ? i : -1))
+      .filter((i) => i !== -1);
+    const segundosIdx =
+      maxMaki !== segundoMaki
+        ? makisRonda
+            .map((m, i) => (m === segundoMaki ? i : -1))
+            .filter((i) => i !== -1)
+        : [];
+
+    const ptsPrimeros = Math.floor(6 / primerosIdx.length);
+    const ptsSegundos =
+      segundosIdx.length > 0 ? Math.floor(3 / segundosIdx.length) : 0;
+
+    const nuevas = puntuaciones.map((p, pi) => {
+      const ptsActuales = p[r] ?? 0;
+      let bonus = 0;
+      if (primerosIdx.includes(pi)) bonus += ptsPrimeros;
+      if (segundosIdx.includes(pi)) bonus += ptsSegundos;
+      return p.map((v, j) => (j === r ? ptsActuales + bonus : v));
+    });
+
+    setPuntuaciones(nuevas);
+
+    if (rondaActual < 3) {
       setRondaActual(rondaActual + 1);
     }
+  };
+
+  const finalizarPartida = () => {
+    if (!todasRellenas) return;
+
+    const r = rondaActual - 1;
+    const makisRonda = jugadores.map((_, pi) => makiPorRonda[pi]?.[r] ?? 0);
+    const maxMaki = Math.max(...makisRonda);
+    const segundoMaki = [...makisRonda].sort((a, b) => b - a)[1];
+    const primerosIdx = makisRonda
+      .map((m, i) => (m === maxMaki ? i : -1))
+      .filter((i) => i !== -1);
+    const segundosIdx =
+      maxMaki !== segundoMaki
+        ? makisRonda
+            .map((m, i) => (m === segundoMaki ? i : -1))
+            .filter((i) => i !== -1)
+        : [];
+    const ptsPrimeros = Math.floor(6 / primerosIdx.length);
+    const ptsSegundos =
+      segundosIdx.length > 0 ? Math.floor(3 / segundosIdx.length) : 0;
+
+    const maxPudin = Math.max(...pudinTotal);
+    const minPudin = Math.min(...pudinTotal);
+    const conMasPudin = pudinTotal
+      .map((v, i) => (v === maxPudin ? i : -1))
+      .filter((i) => i !== -1);
+    const conMenosPudin = pudinTotal
+      .map((v, i) => (v === minPudin ? i : -1))
+      .filter((i) => i !== -1);
+    const ptsPudinMax = Math.floor(6 / conMasPudin.length);
+    const ptsPudinMin =
+      jugadores.length > 2 ? Math.floor(6 / conMenosPudin.length) : 0;
+    const todosMismoPudin = pudinTotal.every((v) => v === pudinTotal[0]);
+
+    const nuevas = puntuaciones.map((p, pi) => {
+      const ptsActuales = p[r] ?? 0;
+      let bonus = 0;
+      if (primerosIdx.includes(pi)) bonus += ptsPrimeros;
+      if (segundosIdx.includes(pi)) bonus += ptsSegundos;
+      return p.map((v, j) => (j === r ? ptsActuales + bonus : v));
+    });
+
+    const conPudin = nuevas.map((p, pi) => {
+      const total = p.reduce((a: number, v) => a + (v ?? 0), 0);
+      let bonusPudin = 0;
+      if (!todosMismoPudin) {
+        if (conMasPudin.includes(pi)) bonusPudin += ptsPudinMax;
+        if (jugadores.length > 2 && conMenosPudin.includes(pi))
+          bonusPudin -= ptsPudinMin;
+      }
+      return p.map((v, j) => (j === 2 ? (v ?? 0) + bonusPudin : v));
+    });
+
+    setPuntuaciones(conPudin);
+    router.push("/sushigo/final");
   };
 
   return (
@@ -85,7 +173,7 @@ export default function SushiGoPuntuacion() {
                   onPress={() => {
                     if (!esFutura) {
                       router.push({
-                        pathname: "/sushigoronda" as any,
+                        pathname: "/sushigo/ronda" as any,
                         params: { jugador: pi, ronda: r },
                       });
                     }
@@ -153,6 +241,7 @@ export default function SushiGoPuntuacion() {
               styles.primaryBtnGreen,
               !todasRellenas && styles.primaryBtnDisabled,
             ]}
+            onPress={finalizarPartida}
           >
             <Text style={styles.primaryBtnText}>Finalizar partida</Text>
           </TouchableOpacity>

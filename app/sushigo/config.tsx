@@ -1,4 +1,4 @@
-import SushiGoConfig from "../screens/SushiGoConfig";
+import SushiGoConfig from "../../screens/sushigo/SushiGoConfig";
 
 export default function SushiGoConfigPage() {
   return <SushiGoConfig />;

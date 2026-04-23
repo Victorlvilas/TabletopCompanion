@@ -1,14 +1,14 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-} from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { useGame } from "./GameContext";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useGame } from "../GameContext";
 
 export default function SushiGoConfig() {
   const router = useRouter();
@@ -16,6 +16,8 @@ export default function SushiGoConfig() {
     setJugadores: guardarJugadores,
     setPuntuaciones,
     setRondaActual,
+    setMakiPorRonda,
+    setPudinTotal,
   } = useGame();
   const [jugadores, setJugadores] = useState(["Lena", "Víctor"]);
 
@@ -88,7 +90,9 @@ export default function SushiGoConfig() {
             guardarJugadores(jugadores);
             setPuntuaciones(jugadores.map(() => [null, null, null]));
             setRondaActual(1);
-            router.push("/sushigopuntuacion");
+            setMakiPorRonda(jugadores.map(() => [0, 0, 0]));
+            setPudinTotal(jugadores.map(() => 0));
+            router.push("/sushigo/puntuacion");
           }}
         >
           <Text style={styles.primaryBtnText}>Iniciar partida</Text>

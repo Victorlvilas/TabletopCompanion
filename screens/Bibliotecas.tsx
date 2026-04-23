@@ -22,7 +22,10 @@ export default function Bibliotecas() {
       <Text style={styles.sectionLabel}>2 Bibliotecas</Text>
 
       <View style={styles.cardsList}>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => router.push("/listajuegos")}
+        >
           <View style={[styles.cardImg, styles.bib1]}>
             <Text style={styles.cardTitle}>Lena y Víctor</Text>
             <Text style={styles.cardSubtitle}>Colección compartida</Text>
@@ -32,16 +35,13 @@ export default function Bibliotecas() {
             <TouchableOpacity style={styles.dotsBtn}>
               <Text style={styles.dots}>···</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.arrowBtn}
-              onPress={() => router.push("/listajuegos")}
-            >
-              <Text style={styles.arrowText}>›</Text>
-            </TouchableOpacity>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => router.push("/listajuegos")}
+        >
           <View style={[styles.cardImg, styles.bib2]}>
             <Text style={styles.cardTitle}>Bruno</Text>
             <Text style={styles.cardSubtitle}>Colección personal</Text>
@@ -50,12 +50,6 @@ export default function Bibliotecas() {
             <Text style={styles.metaText}>2 juegos</Text>
             <TouchableOpacity style={styles.dotsBtn}>
               <Text style={styles.dots}>···</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrowBtn, styles.arrowGreen]}
-              onPress={() => router.push("/listajuegos")}
-            >
-              <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -131,14 +125,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   dots: { fontSize: 14, color: "#888", letterSpacing: 2 },
-  arrowBtn: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "#1a1a2e",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  arrowGreen: { backgroundColor: "#2d6a4f" },
-  arrowText: { fontSize: 18, color: "#fff", lineHeight: 22 },
 });

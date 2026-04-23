@@ -31,7 +31,7 @@ export default function ListaJuegos() {
       <View style={styles.cardsList}>
         <TouchableOpacity
           style={styles.card}
-          onPress={() => router.push("/sushigoconfig")}
+          onPress={() => router.push("/sushigo/config")}
         >
           <View style={[styles.cardImg, styles.sushi]}>
             <Text style={styles.emoji}>🍣</Text>
@@ -41,11 +41,11 @@ export default function ListaJuegos() {
           <View style={styles.cardMeta}>
             <Text style={styles.metaText}>👥 2–5</Text>
             <Text style={styles.metaText}>🕐 15 min</Text>
-            <TouchableOpacity style={styles.dotsBtn}>
+            <TouchableOpacity
+              style={styles.dotsBtn}
+              onPress={() => router.push("/sushigo/config")}
+            >
               <Text style={styles.dots}>···</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.arrowBtn} onPress={() => router.push('/sushigoconfig')}>
-              <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -62,13 +62,8 @@ export default function ListaJuegos() {
           <View style={styles.cardMeta}>
             <Text style={styles.metaText}>👥 2–4</Text>
             <Text style={styles.metaText}>🕐 20-40 min</Text>
-            <TouchableOpacity style={styles.dotsBtn}>
+            <TouchableOpacity style={styles.dotsBtn} onPress={() => {}}>
               <Text style={styles.dots}>···</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrowBtn, { backgroundColor: "#185FA5" }]}
-            >
-              <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -82,13 +77,8 @@ export default function ListaJuegos() {
           <View style={styles.cardMeta}>
             <Text style={styles.metaText}>👥 2–6</Text>
             <Text style={styles.metaText}>🕐 30-60 min</Text>
-            <TouchableOpacity style={styles.dotsBtn}>
+            <TouchableOpacity style={styles.dotsBtn} onPress={() => {}}>
               <Text style={styles.dots}>···</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrowBtn, { backgroundColor: "#0F6E56" }]}
-            >
-              <Text style={styles.arrowText}>›</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -202,13 +192,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   dots: { fontSize: 14, color: "#888", letterSpacing: 2 },
-  arrowBtn: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "#1a1a2e",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  arrowText: { fontSize: 18, color: "#fff", lineHeight: 22 },
 });

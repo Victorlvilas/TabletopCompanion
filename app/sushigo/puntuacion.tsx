@@ -1,4 +1,4 @@
-import SushiGoPuntuacion from "../screens/SushiGoPuntuacion";
+import SushiGoPuntuacion from "../../screens/sushigo/SushiGoPuntuacion";
 
 export default function SushiGoPuntuacionPage() {
   return <SushiGoPuntuacion />;
